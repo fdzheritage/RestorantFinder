@@ -1,8 +1,18 @@
 
-window.onload = function() {
+let resultsDiv;
 
+window.onload = function() {
+    resultsDiv =     document.getElementById("results");
+    let searchBox = document.getElementById("search-box");
+    let searchButton = document.getElementById("search-button");
+    searchButton.addEventListener('click', () => {
+       // console.log("Working");
+        let searchTerm = searchBox.value;
+        searchByCity(searchTerm);
+        // console.log(searchTerm);
+    });
   // searchByCity('chicago');
-    showAllCategories();
+    //showAllCategories();
 };
 
 
@@ -23,9 +33,15 @@ async function searchByCity( city ) {
 
     const response = await fetch(myRequest);
     const json = await response.json();
+    let resultHTML = ``;
     console.log(json);
-
-
+    json.location_suggestions.forEach(
+        location => {
+            console.log(location.name);
+            // resultHTML = resultHTML + `<div>${location.name}</div>`;
+        }
+    );
+    resultsDiv = resultHTML;
 }
 
 
@@ -44,5 +60,8 @@ async function showAllCategories() {
 
     const response = await fetch(myRequest);
     const json = await response.json();
-    console.log(json);
+    
+    
+    // Output to the page as HTML
+
 } 
