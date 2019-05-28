@@ -24,7 +24,7 @@ window.onload = async function () {
 
     searchButton.addEventListener('click', async () => {
         let container = document.getElementById("list-of-restaurants");
-        
+
         let dataJSON = {
             name: "Bastardo Tacos",
             address: "123 rue"
@@ -33,14 +33,14 @@ window.onload = async function () {
 
         let query = searchBox.value.trim();
         let locationJSON = await searchLocation(query);
-        loadRestaurantList(container, dataJSON );
+        loadRestaurantList(container, dataJSON);
     });
 
     detailsButton.addEventListener('click', async () => {
         let restaurantID = 3700835; // Just for testing, will delete later
         let dataJSON = fetchRestaurantDetails(restaurantID);
         let restaurantDetails = document.getElementById('reataurant-details');
-        loadRestaurantList( restaurantDetails, dataJSON);
+        loadRestaurantList(restaurantDetails, dataJSON);
     });
 }
 
@@ -58,25 +58,20 @@ function loadCategories(element, dataJSON) {
 }
 
 
-function loadRestaurantList(container, dataJSON ) {
+function loadRestaurantList(container, dataJSON) {
     // To be completed by Krasimir
 
 
-    container.innerHTML = `
-        <div>
-            <h2>${dataJSON.name}</h2>
-        </div>
-    `;
+    container.innerHTML = `Your HTML HERE`;
 }
 
 function showRestaurantDetails(container, dataJSON) {
     // To be completed by Anna
-    container.innerHTML = `
-        <div>
-            <pre>
-                ${JSON.stringify(dataJSON)}
-            </pre>
-        </div>
-    `;
+    container.innerHTML = `YOUR HTML HERE`;
+}
+
+function loadLocationSuggestions(container, dataJSON) {
+    // To be completed by Krasimir
+    container.innerHTML = `YOUR HTML HERE`;
 }
 
