@@ -1,0 +1,17 @@
+
+#top-container {
+    background-color: black;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.356), rgba(0, 0, 0, 0.356)), url('https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+    /* background-image: url('https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); */
+    color: rgb(255, 255, 255);   
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+}
+
+#top-container h1 {
+    /* font-family: 'Open Sans', sans-serif; */
+    font-size: 3em;
+    /* font-weight: bold; */
+}
