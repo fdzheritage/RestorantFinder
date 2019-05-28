@@ -1,11 +1,13 @@
 let categorySelect;
 let searchButton;
 let searchBox;
+let detailsButton;
 
 window.onload = async function () {
     categorySelect = document.getElementById('categories');
     searchBox = document.getElementById('searchBox');
     searchButton = document.getElementById('searchButton');
+    detailsButton = document.getElementById('detailsButton');
 
     // Check if categories are stored in client
     let categoriesJSON = localStorage.getItem('categories');

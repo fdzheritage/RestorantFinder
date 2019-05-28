@@ -27,3 +27,12 @@ async function searchLocation(query) {
     json = await response.json();
     return json;
 }
+
+
+async function fetchRestaurantsByCity(zomatoCityId){
+    let resource = `${zomato.endPoint}/search?entity_id=${zomatoCityId}&entity_type=city`;
+    response = await fetch(resource, zomato.init);
+    json = await response.json();
+    return json;
+}
+
