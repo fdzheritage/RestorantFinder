@@ -36,3 +36,9 @@ async function fetchRestaurantsByCity(zomatoCityId){
     return json;
 }
 
+async function fetchRestaurantDetails(restaurantID){
+    let resource = `${zomato.endPoint}/restaurant?res_id=${restaurantID}`;
+    response = await fetch(resource, zomato.init);
+    json = await response.json();
+    return json;
+}

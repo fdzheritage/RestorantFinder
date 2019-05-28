@@ -35,6 +35,13 @@ window.onload = async function () {
         let locationJSON = await searchLocation(query);
         loadRestaurantList(container, dataJSON );
     });
+
+    detailsButton.addEventListener('click', async () => {
+        let restaurantID = 3700835; // Just for testing, will delete later
+        let dataJSON = fetchRestaurantDetails(restaurantID);
+        let restaurantDetails = document.getElementById('reataurant-details');
+        loadRestaurantList( restaurantDetails, dataJSON);
+    });
 }
 
 
@@ -58,6 +65,17 @@ function loadRestaurantList(container, dataJSON ) {
     container.innerHTML = `
         <div>
             <h2>${dataJSON.name}</h2>
+        </div>
+    `;
+}
+
+function showRestaurantDetails(container, dataJSON) {
+    // To be completed by Anna
+    container.innerHTML = `
+        <div>
+            <pre>
+                ${JSON.stringify(dataJSON)}
+            </pre>
         </div>
     `;
 }
