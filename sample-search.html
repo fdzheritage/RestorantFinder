@@ -29,7 +29,7 @@
                 <input type="text" class="form-control" placeholder="Search by City" aria-label="Recipient's username"
                     aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" id="searchButton">Button</button>
+                    <button class="btn btn-primary" type="button" id="button-addon2">Button</button>
                 </div>
             </div>
         </div>
@@ -37,22 +37,41 @@
     </div>
     <div class="container">
         <div class="row mt-5">
-          <h2>Restaurants in Ottawa</h2>
-          <div id="list-of-restaurants">
-            <!-- List will be generated with javascript -->
-          </div>
+            <h2>Restaurants in Ottawa</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Restaurant Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Buddakan</td>
+                        <td>75 9th Avenue 10011</td>
+                        <td>New York City</td>
+                        <td>United States</td>
+                    </tr>
+                    <tr>
+                        <td>Buddakan</td>
+                        <td>75 9th Avenue 10011</td>
+                        <td>New York City</td>
+                        <td>United States</td>
+                    </tr>
+                    <tr>
+                        <td>Buddakan</td>
+                        <td>75 9th Avenue 10011</td>
+                        <td>New York City</td>
+                        <td>United States</td>
+                    </tr>
+
+                </tbody>
+            </table>
 
         </div>
-
-        <div class="row">
-          <button class="btn btn-primary" id="detailsButton">Show Restaurant Details</button>
-          <div id="reataurant-details">      
-        </div>
-      <!-- Ana will output the details here -->
     </div>
-    </div>
-
-    
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -65,8 +84,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="js/zomato.js"></script>
-    <script src="js/main.js"></script>
 </body>
 
 </html>

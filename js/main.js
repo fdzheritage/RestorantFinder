@@ -1,67 +1,64 @@
+let categorySelect;
+let searchButton;
+let searchBox;
+let detailsButton;
 
-let resultsDiv;
+window.onload = async function () {
+    categorySelect = document.getElementById('categories');
+    searchBox = document.getElementById('searchBox');
+    searchButton = document.getElementById('searchButton');
+    detailsButton = document.getElementById('detailsButton');
 
-window.onload = function() {
-    resultsDiv =     document.getElementById("results");
-    let searchBox = document.getElementById("search-box");
-    let searchButton = document.getElementById("search-button");
-    searchButton.addEventListener('click', () => {
-       // console.log("Working");
-        let searchTerm = searchBox.value;
-        searchByCity(searchTerm);
-        // console.log(searchTerm);
-    });
-  // searchByCity('chicago');
-    //showAllCategories();
-};
+    // Check if categories are stored in client
+    let categoriesJSON = localStorage.getItem('categories');
+    if (!categoriesJSON) {
+        categoriesJSON = await fetchCategories();
+        localStorage.setItem('categories', JSON.stringify(categoriesJSON));
+    } else {
+        categoriesJSON = JSON.parse(categoriesJSON);
+        //console.log('categories loaded from local storage');
+    }
+
+    // loadCategories(categorySelect, categoriesJSON);
 
 
-async function searchByCity( city ) {
-   
-
-    myHeaders = new Headers({
-        'Accept': 'application/json',
-        'user-key': 'dd0bd5a709e94d4b8ebce601ad243771'
-      });
-
-    var myInit = { method: 'GET',
-                headers: myHeaders,
-                mode: 'cors',
-                cache: 'default' };
-
-    var myRequest = new Request(`https://developers.zomato.com/api/v2.1/cities?q=${city}`, myInit);
-
-    const response = await fetch(myRequest);
-    const json = await response.json();
-    let resultHTML = ``;
-    console.log(json);
-    json.location_suggestions.forEach(
-        location => {
-            console.log(location.name);
-            // resultHTML = resultHTML + `<div>${location.name}</div>`;
+    searchButton.addEventListener('click', async () => {
+        let container = document.getElementById("list-of-restaurants");
+        
+        let dataJSON = {
+            name: "Bastardo Tacos",
+            address: "123 rue"
         }
-    );
-    resultsDiv = resultHTML;
+
+
+        let query = searchBox.value.trim();
+        let locationJSON = await searchLocation(query);
+        loadRestaurantList(container, dataJSON );
+    });
 }
 
 
-async function showAllCategories() {
-    myHeaders = new Headers({
-        'Accept': 'application/json',
-        'user-key': 'dd0bd5a709e94d4b8ebce601ad243771'
-      });
 
-    var myInit = { method: 'GET',
-                headers: myHeaders,
-                mode: 'cors',
-                cache: 'default' };
+function loadCategories(element, dataJSON) {
+    categoriesHTML = ``;
+    let { categories } = dataJSON;
+    categories.forEach(category => {
+        let { id, name } = category.categories;
+        categoriesHTML +=
+            `<option value="${id}">${name}</option>`;
+    });
+    element.innerHTML = categoriesHTML;
+}
 
-    var myRequest = new Request(`https://developers.zomato.com/api/v2.1/categories`, myInit);
 
-    const response = await fetch(myRequest);
-    const json = await response.json();
-    
-    
-    // Output to the page as HTML
+function loadRestaurantList(container, dataJSON ) {
+    // To be completed by Krasimir
 
-} 
+
+    container.innerHTML = `
+        <div>
+            <h2>${dataJSON.name}</h2>
+        </div>
+    `;
+}
+
