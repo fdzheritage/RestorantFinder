@@ -56,3 +56,24 @@ div.col.votes {
 #rest-list tbody tr {
     cursor: pointer;
 }
+
+#wait-icon.show {
+    display: flex;
+}
+
+#wait-icon {
+    display: flex;
+    align-items: center;
+    color: white;
+    display: none;
+}
+
+#wait-icon i {
+    animation: spin 2s linear infinite;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

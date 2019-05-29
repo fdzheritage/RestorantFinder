@@ -10,6 +10,7 @@ let selectCityModal
 let tableRows;
 let restaurantDetails;
 let pagination;
+let loader;
 
 
 // Data
@@ -31,6 +32,7 @@ window.onload = async function () {
     restList = document.getElementById('rest-list');
     restaurantDetails = document.getElementById('restaurantDetails');
     pagination = document.getElementById('pagination');
+    loader = document.getElementById('wait-icon');
 
 
     // Add Event Listeners
@@ -54,6 +56,7 @@ async function searchButtonPressed() {
     if (query == "") {
         alert("Please enter the name of a city on the search box");
     } else {
+        showLoader();
         let citiesJSON = await searchCity(query);
         let cities = citiesJSON.location_suggestions;
         let results = cities.length;
@@ -73,6 +76,7 @@ async function searchButtonPressed() {
             loadCitySelector(citySelector, citiesJSON);
             $('#selectCityModal').modal('show');
         }
+        hideLoader();
     }
 }
 
@@ -105,6 +109,15 @@ function rowClicked() {
 
 
 // Functions that render elements on the page using data from web services
+function showLoader() {
+    loader.classList.add("show");
+}
+
+function hideLoader() {
+    loader.classList.remove("show");
+}
+
+
 function loadCitySelector(container, dataJSON) {
     // To be completed by Krasimir
     container.innerHTML = `<option value="295">Your Options Go Here</option>`;
