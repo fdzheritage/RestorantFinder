@@ -47,10 +47,11 @@ div.col.votes {
 }
 
 #map {
-    background-image: url('../img/map-placeholder.png');
+    /* background-image: url('../img/map-placeholder.png'); */
     width: 100%;
+    min-width: 200px;
     height: 400px;
-    border: 1px solid rgba(0, 0, 0, 0.125);
+    border: 1px solid rgb(204, 204, 204);
 }
 
 #rest-list tbody tr {

@@ -44,40 +44,26 @@
         <!-- BEGIN Results title -->
         <div class="row mt-5">
             <div class="col justify-content-center">
-                <h2>Restaurants in <span id="rest-city">City</span>, <span id="rest-country">Courntry</span></h2>
+                <h2 id="title">Restaurants in City, Country</h2>
             </div>
         </div>
         <!-- END Results ttle -->
 
         <div class="row mt-5">
             <!-- BEGIN List of restaurants -->
-            <div class="col-8" id="rest-list">
+            <div class="col-8">
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Restaurant Name</th>
                             <th scope="col">Address</th>
-                            <!-- <th scope="col">Details</th> -->
-
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="rest-list">
                         <tr class="table-active">
-                            <td>El Camino</td>
-                            <td>380 Elgin Street, Ottawa K2P 1M9</td>
-                            <!-- <td><i class="far fa-eye"></i></td> -->
+                            <td>Search cities above</td>
+                            <td>Search cities above</td>
                         </tr>
-                        <tr>
-                            <td>Buddakan</td>
-                            <td>75 9th Avenue 10011</td>
-                            <!-- <td><i class="far fa-eye"></i></td> -->
-                        </tr>
-                        <tr>
-                            <td>Buddakan</td>
-                            <td>75 9th Avenue 10011</td>
-                            <!-- <td><i class="far fa-eye"></i></td> -->
-                        </tr>
-
 
                     </tbody>
 
@@ -99,30 +85,28 @@
                 <!-- BEGIN Restaurant details -->
                 <div id="restaurantDetails" class="mb-5 justify-content-center">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top"
-                            src="https://b.zmtcdn.com/data/res_imagery/16665387_CHAIN_7e8cae1d3ce1f1dd5bc2e5e1a1578145.jpg"
-                            alt="Card image cap">
+                        <img class="card-img-top" src="https://via.placeholder.com/286x143" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title">El Camino</h5>
+                            <h5 class="card-title">No restaurant selected</h5>
                             <ul class="restaurant-info">
                                 <li>
                                     <span class="info-label">Cuisines: </span>
-                                    <span class="info-text">Mexican, Fusion</span>
+                                    <span class="info-text"></span>
                                 </li>
                                 <li>
                                     <span class="info-label">Avg price for 2: </span>
-                                    <span class="info-text">$30</span>
+                                    <span class="info-text">$</span>
                                 </li>
                                 <div class="row rating">
                                     <div class="col stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
                                     </div>
                                     <div class="col votes">
-                                        <span class="badge badge-primary">840</span>
+                                        <span class="badge badge-primary">0</span>
                                     </div>
                                 </div>
                             </ul>
@@ -130,12 +114,10 @@
                         <div class="card-footer text-muted">
                             <div class="row">
                                 <div class="col text-center">
-                                    <a href="https://www.zomato.com/ottawa/el-camino-centretown?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1"
-                                        target="_blank" class="card-link"><i class="fas fa-globe"></i></a>
+                                    <a href="" target="_blank" class="card-link"><i class="fas fa-globe"></i></a>
                                 </div>
                                 <div class="col text-center">
-                                    <a href="https://www.zomato.com/new-york-city/otto-enoteca-pizzeria-greenwich-village/menu#tabtop"
-                                        target="_blank" class="card-link"><i class="fas fa-utensils"></i></a>
+                                    <a href="" target="_blank" class="card-link"><i class="fas fa-utensils"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -169,10 +151,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <select class="form-control" id="citySelector">
-                            <option value="123">Ottawa, ON</option>
-                            <option value="124">Ottawa, TN</option>
-                            <option value="125">Ottawa, MX</option>
-                            <option value="126">Ottawa, AR</option>
+                            <option value="0">No cities found</option>
                         </select>
                     </div>
                 </div>

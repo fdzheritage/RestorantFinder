@@ -10,6 +10,7 @@ let selectCityModal
 let tableRows;
 let restaurantDetails;
 let pagination;
+let title;
 let loader;
 
 
@@ -18,6 +19,7 @@ let cityId;
 let cityName;
 let countryName;
 let listJSON;
+let cities;
 
 // Tokens and API Keys
 mapboxgl.accessToken = 'pk.eyJ1IjoiZmR6aGVyaXRhZ2UiLCJhIjoiY2p2eHphNDMzMGFncTRhbXFjMng2Z3phNyJ9.1dI5Wg2gw_JHsA85nzldUA';
@@ -32,6 +34,7 @@ window.onload = async function () {
     restList = document.getElementById('rest-list');
     restaurantDetails = document.getElementById('restaurantDetails');
     pagination = document.getElementById('pagination');
+    title = document.getElementById('title');
     loader = document.getElementById('wait-icon');
 
 
@@ -58,7 +61,7 @@ async function searchButtonPressed() {
     } else {
         showLoader();
         let citiesJSON = await searchCity(query);
-        let cities = citiesJSON.location_suggestions;
+        cities = citiesJSON.location_suggestions;
         let results = cities.length;
         if (results < 1) {
             // If no results, inform the user that no cities were found
@@ -69,6 +72,10 @@ async function searchButtonPressed() {
         } else if (results == 1) {
             // If there is only one city, don't ask the user
             cityId = cities[0].id;
+            cityName = cities[0].name;
+            countryName = cities[0].countryName;
+            renderTitle(title, cityName, countryName);
+
             listJSON = await fetchRestaurantsByCity(cityId);
             loadRestaurantList(restList, listJSON);
         } else {
@@ -91,8 +98,10 @@ function citySelectorClicked() {
 
 async function citySelected() {
     cityId = citySelector.value;
+    cityName = cities[citySelector.selectedIndex].name;
+    countryName = cities[citySelector.selectedIndex].country_name;
     listJSON = await fetchRestaurantsByCity(cityId);
-    // console.log(cityId);
+    renderTitle(title, cityName, countryName);
     loadRestaurantList(restList, listJSON);
 }
 
@@ -126,30 +135,34 @@ function loadCitySelector(container, dataJSON) {
 
 function loadRestaurantList(container, dataJSON) {
     // To be completed by Krasimir
-    container.innerHTML = `Restaurant List Table goes Here`;
-    // console.log(dataJSON);
+    container.innerHTML = `<tr><td>Your table body goes here</td><td>and here</td></tr>`;
 
-    // Don't delete the following line
+    // Don't remove the following lines
     addTableEventListeners();
     renderPagination(pagination, dataJSON);
 }
 
 function renderRestaurantDetails(container, dataJSON) {
     // To be completed by Krasimir 
-    container.innerHTML = `YOUR HTML HERE`;
+    container.innerHTML = `YOUR RESTAURANT DETAILS HERE`;
 }
 
-function loadLocationSuggestions(container, dataJSON) {
-    // To be completed by Krasimir
-    container.innerHTML = `YOUR HTML HERE`;
-}
 
 function renderPagination(container, dataJSON) {
+    console.log(container);
+    // To be completed by Krasimir
+    container.innerHTML = `YOUR PAGINATION GOES HERE`;
+}
+
+function renderTitle(container, city, country) {
     // To be completed by Anna
+    console.log(city, country);
+    container.innerHTML = `YOUR TITLE HERE`;
 }
 
 function renderMap(container, longitud, latitud) {
     // To be completed by Anna
+    // Use code from mabbox
 }
 
 

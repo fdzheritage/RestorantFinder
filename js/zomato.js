@@ -12,6 +12,7 @@ zomato.init = {
 
 // Returns a list of cities that match the query
 async function searchCity(query) {
+    query = query.toLowerCase();
     // First verify if this info is already stored in client
     let jsonString = localStorage.getItem(query);
 
@@ -36,7 +37,7 @@ async function fetchRestaurantsByCity(cityId) {
     if (jsonString) {
         return JSON.parse(jsonString);
     } else {
-        // Fetch if not in localsorage
+        // Fetch data not in localsorage
         let resource = `${zomato.endPoint}/search?entity_id=${cityId}&entity_type=city`;
         response = await fetch(resource, zomato.init);
         json = await response.json();
