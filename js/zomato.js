@@ -1,4 +1,3 @@
-/*   START ZOMATO API SETTINGS */
 let zomato = {};
 zomato.endPoint = 'https://developers.zomato.com/api/v2.1/';
 zomato.init = {
@@ -10,35 +9,22 @@ zomato.init = {
         'user-key': 'dd0bd5a709e94d4b8ebce601ad243771'
     }
 };
-/*   END ZOMATO API SETTINGS */
 
-
-// Return json 
-async function fetchCategories() {
-    let resource = `${zomato.endPoint}/categories`;
+// Returns a list of cities that match the query
+async function searchCity(query) {
+    let resource = `${zomato.endPoint}/cities?q=${query}`;
     response = await fetch(resource, zomato.init);
     json = await response.json();
     return json;
 }
 
-async function searchLocation(query) {
-    let resource = `${zomato.endPoint}/locations?query=${query}`;
+// Needs to be called after searchCity because
+// the city id is needed to find restaurants 
+// Returns a list of restaurants in a specific city (provide city id)
+async function fetchRestaurantsByCity(cityId) {
+    let resource = `${zomato.endPoint}/search?entity_id=${cityId}&entity_type=city`;
     response = await fetch(resource, zomato.init);
     json = await response.json();
     return json;
 }
 
-
-async function fetchRestaurantsByCity(zomatoCityId){
-    let resource = `${zomato.endPoint}/search?entity_id=${zomatoCityId}&entity_type=city`;
-    response = await fetch(resource, zomato.init);
-    json = await response.json();
-    return json;
-}
-
-async function fetchRestaurantDetails(restaurantID){
-    let resource = `${zomato.endPoint}/restaurant?res_id=${restaurantID}`;
-    response = await fetch(resource, zomato.init);
-    json = await response.json();
-    return json;
-}

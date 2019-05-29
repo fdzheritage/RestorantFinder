@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="css/main.css">
     <title>Restaurant Finder</title>
 </head>
@@ -26,9 +25,9 @@
         </div>
         <div class="row pb-5">
             <div class="input-group col-md-6 offset-md-3 mb-5 mt-5">
-                <input id="searchBox" type="text" class="form-control" placeholder="Search by City">
+                <input type="text" class="form-control" placeholder="Search by City">
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" id="searchButton">Search</button>
+                    <button class="btn btn-primary" type="button" id="serachButton">Search</button>
                 </div>
             </div>
         </div>
@@ -48,8 +47,8 @@
 
         <div class="row mt-5">
             <!-- BEGIN List of restaurants -->
-            <div class="col-8" id="rest-list">
-                <table class="table table-hover">
+            <div class="col-8">
+                <table class="table table-hover" id="rest-list">
                     <thead>
                         <tr>
                             <th scope="col">Restaurant Name</th>
@@ -59,17 +58,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="table-active">
+                        <tr class="table-active" data-index="0">
                             <td>El Camino</td>
                             <td>380 Elgin Street, Ottawa K2P 1M9</td>
                             <!-- <td><i class="far fa-eye"></i></td> -->
                         </tr>
-                        <tr>
+                        <tr data-index="1">
                             <td>Buddakan</td>
                             <td>75 9th Avenue 10011</td>
                             <!-- <td><i class="far fa-eye"></i></td> -->
                         </tr>
-                        <tr>
+                        <tr data-index="0">
                             <td>Buddakan</td>
                             <td>75 9th Avenue 10011</td>
                             <!-- <td><i class="far fa-eye"></i></td> -->
@@ -79,7 +78,7 @@
                     </tbody>
 
                 </table>
-                <nav id="pagination">
+                <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -193,9 +192,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
-    <script src="js/zomato.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/sample-search.js"></script>
 </body>
 
 </html>
