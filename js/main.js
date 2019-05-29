@@ -1,67 +1,168 @@
+// Global Variables
 
-let resultsDiv;
-
-window.onload = function() {
-    resultsDiv =     document.getElementById("results");
-    let searchBox = document.getElementById("search-box");
-    let searchButton = document.getElementById("search-button");
-    searchButton.addEventListener('click', () => {
-       // console.log("Working");
-        let searchTerm = searchBox.value;
-        searchByCity(searchTerm);
-        // console.log(searchTerm);
-    });
-  // searchByCity('chicago');
-    //showAllCategories();
-};
+// Components
+let searchButton;
+let searchBox;
+let detailsButton;
+let citySelector;
+let restList;
+let selectCityModal
+let tableRows;
+let restaurantDetails;
+let pagination;
+let title;
+let loader;
 
 
-async function searchByCity( city ) {
-   
+// Data
+let cityId;
+let cityName;
+let countryName;
+let listJSON;
+let cities;
 
-    myHeaders = new Headers({
-        'Accept': 'application/json',
-        'user-key': 'dd0bd5a709e94d4b8ebce601ad243771'
-      });
+// Tokens and API Keys
+mapboxgl.accessToken = 'pk.eyJ1IjoiZmR6aGVyaXRhZ2UiLCJhIjoiY2p2eHphNDMzMGFncTRhbXFjMng2Z3phNyJ9.1dI5Wg2gw_JHsA85nzldUA';
 
-    var myInit = { method: 'GET',
-                headers: myHeaders,
-                mode: 'cors',
-                cache: 'default' };
+// Setup elements and event listeners
+window.onload = async function () {
+    // Get components
+    searchBox = document.getElementById('searchBox');
+    searchButton = document.getElementById('searchButton');
+    detailsButton = document.getElementById('detailsButton');
+    citySelector = document.getElementById('citySelector');
+    restList = document.getElementById('rest-list');
+    restaurantDetails = document.getElementById('restaurantDetails');
+    pagination = document.getElementById('pagination');
+    title = document.getElementById('title');
+    loader = document.getElementById('wait-icon');
 
-    var myRequest = new Request(`https://developers.zomato.com/api/v2.1/cities?q=${city}`, myInit);
 
-    const response = await fetch(myRequest);
-    const json = await response.json();
-    let resultHTML = ``;
-    console.log(json);
-    json.location_suggestions.forEach(
-        location => {
-            console.log(location.name);
-            // resultHTML = resultHTML + `<div>${location.name}</div>`;
-        }
-    );
-    resultsDiv = resultHTML;
+    // Add Event Listeners
+    searchButton.addEventListener('click', searchButtonPressed);
+    $('#selectCityModal').on('hide.bs.modal', citySelectionCanceled);
+    citySelector.addEventListener('click', citySelectorClicked);
+
 }
 
 
-async function showAllCategories() {
-    myHeaders = new Headers({
-        'Accept': 'application/json',
-        'user-key': 'dd0bd5a709e94d4b8ebce601ad243771'
-      });
+// Functions that handle events from event listeners
+function addTableEventListeners() {
+    tableRows = document.querySelectorAll('#rest-list tbody tr');
+    tableRows.forEach(row => {
+        row.addEventListener('click', rowClicked);
+    });
+}
 
-    var myInit = { method: 'GET',
-                headers: myHeaders,
-                mode: 'cors',
-                cache: 'default' };
+async function searchButtonPressed() {
+    let query = searchBox.value.trim();
+    if (query == "") {
+        alert("Please enter the name of a city on the search box");
+    } else {
+        showLoader();
+        let citiesJSON = await searchCity(query);
+        cities = citiesJSON.location_suggestions;
+        let results = cities.length;
+        if (results < 1) {
+            // If no results, inform the user that no cities were found
 
-    var myRequest = new Request(`https://developers.zomato.com/api/v2.1/categories`, myInit);
+            // TODO write message on the page results instead of alert
+            alert(`No city found with the name "${query}"`);
 
-    const response = await fetch(myRequest);
-    const json = await response.json();
-    
-    
-    // Output to the page as HTML
+        } else if (results == 1) {
+            // If there is only one city, don't ask the user
+            cityId = cities[0].id;
+            cityName = cities[0].name;
+            countryName = cities[0].countryName;
+            renderTitle(title, cityName, countryName);
 
-} 
+            listJSON = await fetchRestaurantsByCity(cityId);
+            loadRestaurantList(restList, listJSON);
+        } else {
+            // If more than one city, ask user to select one
+            loadCitySelector(citySelector, citiesJSON);
+            $('#selectCityModal').modal('show');
+        }
+        hideLoader();
+    }
+}
+
+function citySelectionCanceled() {
+    citySelected();
+}
+
+function citySelectorClicked() {
+    citySelected();
+    $('#selectCityModal').modal('hide');
+}
+
+async function citySelected() {
+    cityId = citySelector.value;
+    cityName = cities[citySelector.selectedIndex].name;
+    countryName = cities[citySelector.selectedIndex].country_name;
+    listJSON = await fetchRestaurantsByCity(cityId);
+    renderTitle(title, cityName, countryName);
+    loadRestaurantList(restList, listJSON);
+}
+
+function rowClicked() {
+    let index = this.dataset.index;
+    // Make sure the data is loaded and data exists
+    if (listJSON) {
+        if (listJSON.restaurants.length > index) {
+            renderRestaurantDetails(restaurantDetails, listJSON.restaurants[index].restaurant);
+        }
+    }
+}
+
+
+
+// Functions that render elements on the page using data from web services
+function showLoader() {
+    loader.classList.add("show");
+}
+
+function hideLoader() {
+    loader.classList.remove("show");
+}
+
+
+function loadCitySelector(container, dataJSON) {
+    // To be completed by Krasimir
+    container.innerHTML = `<option value="295">Your Options Go Here</option>`;
+    // console.log(dataJSON);
+}
+
+function loadRestaurantList(container, dataJSON) {
+    // To be completed by Krasimir
+    container.innerHTML = `<tr><td>Your table body goes here</td><td>and here</td></tr>`;
+
+    // Don't remove the following lines
+    addTableEventListeners();
+    renderPagination(pagination, dataJSON);
+}
+
+function renderRestaurantDetails(container, dataJSON) {
+    // To be completed by Krasimir 
+    container.innerHTML = `YOUR RESTAURANT DETAILS HERE`;
+}
+
+
+function renderPagination(container, dataJSON) {
+    console.log(container);
+    // To be completed by Krasimir
+    container.innerHTML = `YOUR PAGINATION GOES HERE`;
+}
+
+function renderTitle(container, city, country) {
+    // To be completed by Anna
+    console.log(city, country);
+    container.innerHTML = `YOUR TITLE HERE`;
+}
+
+function renderMap(container, longitud, latitud) {
+    // To be completed by Anna
+    // Use code from mabbox
+}
+
+

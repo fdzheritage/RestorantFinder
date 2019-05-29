@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="css/main.css">
     <title>Restaurant Finder</title>
 </head>
@@ -26,13 +25,10 @@
         </div>
         <div class="row pb-5">
             <div class="input-group col-md-6 offset-md-3 mb-5 mt-5">
-                <input id="searchBox" type="text" class="form-control" placeholder="Search by City">
+                <input type="text" class="form-control" placeholder="Search by City">
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" id="searchButton">Search</button>
+                    <button class="btn btn-primary" type="button" id="serachButton">Search</button>
                 </div>
-            </div>
-            <div id="wait-icon">
-                <i class="fas fa-spinner fa-2x"></i>
             </div>
         </div>
     </div>
@@ -44,7 +40,7 @@
         <!-- BEGIN Results title -->
         <div class="row mt-5">
             <div class="col justify-content-center">
-                <h2 id="title">Restaurants in City, Country</h2>
+                <h2>Restaurants in <span id="rest-city">City</span>, <span id="rest-country">Courntry</span></h2>
             </div>
         </div>
         <!-- END Results ttle -->
@@ -52,23 +48,32 @@
         <div class="row mt-5">
             <!-- BEGIN List of restaurants -->
             <div class="col-8">
-                <table class="table table-hover">
+                <table class="table table-hover" id="rest-list">
                     <thead>
                         <tr>
                             <th scope="col">Restaurant Name</th>
                             <th scope="col">Address</th>
                         </tr>
                     </thead>
-                    <tbody id="rest-list">
-                        <tr class="table-active">
-                            <td>Search cities above</td>
-                            <td>Search cities above</td>
+                    <tbody>
+                        <tr class="table-active" data-index="0">
+                            <td>El Camino</td>
+                            <td>380 Elgin Street, Ottawa K2P 1M9</td>
                         </tr>
 
+                        <tr data-index="1">
+                            <td>Buddakan</td>
+                            <td>75 9th Avenue 10011</td>
+                        </tr>
+
+                        <tr data-index="0">
+                            <td>Buddakan</td>
+                            <td>75 9th Avenue 10011</td>
+                        </tr>
                     </tbody>
 
                 </table>
-                <nav id="pagination">
+                <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -85,28 +90,30 @@
                 <!-- BEGIN Restaurant details -->
                 <div id="restaurantDetails" class="mb-5 justify-content-center">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://via.placeholder.com/286x143" alt="Card image cap">
+                        <img class="card-img-top"
+                            src="https://b.zmtcdn.com/data/res_imagery/16665387_CHAIN_7e8cae1d3ce1f1dd5bc2e5e1a1578145.jpg"
+                            alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title">No restaurant selected</h5>
+                            <h5 class="card-title">El Camino</h5>
                             <ul class="restaurant-info">
                                 <li>
                                     <span class="info-label">Cuisines: </span>
-                                    <span class="info-text"></span>
+                                    <span class="info-text">Mexican, Fusion</span>
                                 </li>
                                 <li>
                                     <span class="info-label">Avg price for 2: </span>
-                                    <span class="info-text">$</span>
+                                    <span class="info-text">$30</span>
                                 </li>
                                 <div class="row rating">
                                     <div class="col stars">
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
                                         <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
                                     </div>
                                     <div class="col votes">
-                                        <span class="badge badge-primary">0</span>
+                                        <span class="badge badge-primary">840</span>
                                     </div>
                                 </div>
                             </ul>
@@ -114,10 +121,12 @@
                         <div class="card-footer text-muted">
                             <div class="row">
                                 <div class="col text-center">
-                                    <a href="" target="_blank" class="card-link"><i class="fas fa-globe"></i></a>
+                                    <a href="https://www.zomato.com/ottawa/el-camino-centretown?utm_source=api_basic_user&utm_medium=api&utm_campaign=v2.1"
+                                        target="_blank" class="card-link"><i class="fas fa-globe"></i></a>
                                 </div>
                                 <div class="col text-center">
-                                    <a href="" target="_blank" class="card-link"><i class="fas fa-utensils"></i></a>
+                                    <a href="https://www.zomato.com/new-york-city/otto-enoteca-pizzeria-greenwich-village/menu#tabtop"
+                                        target="_blank" class="card-link"><i class="fas fa-utensils"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -126,7 +135,7 @@
                 <!-- END Restaurant details -->
 
                 <!-- START MAP -->
-                <div id="map" class="mb-5">
+                <div id="map" class="mb-5" style="background-image: url(img/map-placeholder.png)">
                     <!-- MAP GOES HERE -->
                 </div>
                 <!-- END MAP -->
@@ -151,7 +160,10 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <select class="form-control" id="citySelector">
-                            <option value="0">No cities found</option>
+                            <option value="123">Ottawa, ON</option>
+                            <option value="124">Ottawa, TN</option>
+                            <option value="125">Ottawa, MX</option>
+                            <option value="126">Ottawa, AR</option>
                         </select>
                     </div>
                 </div>
@@ -175,9 +187,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
-    <script src="js/zomato.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/sample-search.js"></script>
 </body>
 
 </html>
