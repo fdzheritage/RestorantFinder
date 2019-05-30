@@ -174,6 +174,18 @@ function loadRestaurantList(container, dataJSON) {
 	// To be completed by Krasimir
 	//container.innerHTML = `<tr><td>Your table body goes here</td><td>and here</td></tr>`;
 	// console.log(dataJSON);
+	let list = dataJSON.restaurants;
+	let restaurantsHTML = "";
+	list.forEach(item => {
+		// console.log(restaurant.restaurants);
+		restaurantsHTML += `
+                    <tr>
+                        <td>${item.restaurant.name}</td>
+                        <td>${item.restaurant.location.address}</td>
+        			</tr>`;
+	});
+
+	container.innerHTML = restaurantsHTML;
 
 	// Don't remove the following lines
 	addTableEventListeners();
