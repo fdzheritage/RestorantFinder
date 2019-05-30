@@ -151,14 +151,16 @@ function hideLoader() {
     loader.classList.remove("show");
 }
 
-
+// Populate dropdown with sugested cities
 function loadCitySelector(container, dataJSON) {
     // To be completed by Krasimir
     container.innerHTML = `<option value="295">Your Options Go Here</option>`;
     // console.log(dataJSON);
 }
 
+// Populate table with a list of restaurants
 function loadRestaurantList(container, dataJSON) {
+    // TODO
     // To be completed by Krasimir
     //container.innerHTML = `<tr><td>Your table body goes here</td><td>and here</td></tr>`;
     // console.log(dataJSON);
@@ -168,31 +170,38 @@ function loadRestaurantList(container, dataJSON) {
     renderPagination(pagination, dataJSON);
 }
 
+// Add information to the Restaurant Details component
 function renderRestaurantDetails(container, dataJSON) {
+    // TODO
     // To be completed by Krasimir 
     container.innerHTML = `YOUR RESTAURANT DETAILS HERE`;
     // console.log(dataJSON);
 
 }
 
-
+// Create pagination according to total number of results nad results shown
 function renderPagination(container, dataJSON) {
+    // TODO
     // To be completed by Krasimir
     container.innerHTML = `YOUR PAGINATION GOES HERE`;
     // console.log(dataJSON);
 
 }
 
+// Table title with city and country
 function renderTitle(container, city, country) {
+    // TODO
     // To be completed by Anna
     container.innerHTML = `YOUR TITLE HERE`;
     // console.log(city, country);
 }
 
+// Show map using mapbox api
 function renderMap(container, longitud, latitud) {
-    // console.log(longitud, latitud);
+    // TODO
     // To be completed by Anna
     // Use code from mabbox
+    // console.log(longitud, latitud);
 }
 
 
