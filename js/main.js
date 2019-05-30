@@ -119,6 +119,14 @@ async function citySelected() {
 
 function rowClicked() {
     let index = this.dataset.index;
+
+    // Set the active row
+    let activeRows = document.querySelectorAll('#rest-list tr[class="table-active"]');
+    activeRows.forEach(row => {
+        row.classList.remove('table-active');
+    });
+    this.classList.add('table-active');
+
     // Make sure the data is loaded and data exists
     if (listJSON) {
         if (listJSON.restaurants.length > index) {
