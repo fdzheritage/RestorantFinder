@@ -153,6 +153,7 @@ function hideLoader() {
 
 // Populate dropdown with sugested cities
 function loadCitySelector(container, dataJSON) {
+    // TODO
     // To be completed by Krasimir
     container.innerHTML = `<option value="295">Your Options Go Here</option>`;
     // console.log(dataJSON);
