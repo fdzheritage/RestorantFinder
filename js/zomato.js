@@ -19,8 +19,8 @@ async function searchCity(query) {
     if (jsonString) {
         return JSON.parse(jsonString);
     } else {
-        let resource = `${zomato.endPoint}/cities?q=${query}`;
-        response = await fetch(resource, zomato.init);
+        let uri = `${zomato.endPoint}/cities?q=${query}`;
+        response = await fetch(uri, zomato.init);
         json = await response.json();
         localStorage.setItem(query, JSON.stringify(json));
         return json;
@@ -30,18 +30,23 @@ async function searchCity(query) {
 // Needs to be called after searchCity because
 // the city id is needed to find restaurants 
 // Returns a list of restaurants in a specific city (provide city id)
-async function fetchRestaurantsByCity(cityId) {
+async function fetchRestaurantsByCity(cityId, page = 1) {
     // First verify if this info is already stored in client
-    let jsonString = localStorage.getItem(cityId);
+    let localStorageKey = `${cityId}_${page}`
+    let jsonString = localStorage.getItem(localStorageKey);
+
+    // Calculate start offset and count
+    let count = 20;
+    let start = (page - 1) * count;
 
     if (jsonString) {
         return JSON.parse(jsonString);
     } else {
         // Fetch data not in localsorage
-        let resource = `${zomato.endPoint}/search?entity_id=${cityId}&entity_type=city`;
-        response = await fetch(resource, zomato.init);
+        let uri = `${zomato.endPoint}/search?entity_id=${cityId}&entity_type=city&start=${start}&count=${count}`;
+        response = await fetch(uri, zomato.init);
         json = await response.json();
-        localStorage.setItem(cityId, JSON.stringify(json));
+        localStorage.setItem(localStorageKey, JSON.stringify(json));
         return json;
     }
 }
