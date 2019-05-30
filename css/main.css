@@ -79,10 +79,13 @@ div.col.votes {
 	}
 }
 
-#rest-city {
+span.page-link {
+    cursor: pointer;
+}
+/* #rest-city {
 	color: grey;
 }
 #rest-country {
 	font-style: italic;
 	color: teal;
-}
+} */

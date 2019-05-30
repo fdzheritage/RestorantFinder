@@ -1,225 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1, shrink-to-fit=no"
-		/>
 
-		<!-- Bootstrap CSS -->
-		<link
-			rel="stylesheet"
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-			crossorigin="anonymous"
-		/>
-		<link
-			href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-			integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
-			crossorigin="anonymous"
-		/>
-		<link
-			href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css"
-			rel="stylesheet"
-		/>
-		<link rel="stylesheet" href="css/main.css" />
-		<title>Restaurant Finder</title>
-	</head>
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-	<body>
-		<!-- BEGIN Top container with search box -->
-		<div class="container-fluid" id="top-container">
-			<div class="row justify-content-center pt-5">
-				<h1>Restaurant Finder</h1>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+		integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous" />
+	<link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/main.css" />
+	<title>Restaurant Finder</title>
+</head>
+
+<body>
+	<!-- BEGIN Top container with search box -->
+	<div class="container-fluid" id="top-container">
+		<div class="row justify-content-center pt-5">
+			<h1>Restaurant Finder</h1>
+		</div>
+		<div class="row pb-5">
+			<div class="input-group col-md-6 offset-md-3 mb-5 mt-5">
+				<input id="searchBox" type="text" class="form-control" placeholder="Search by City" />
+				<div class="input-group-append">
+					<button class="btn btn-primary" type="button" id="searchButton">
+						Search
+					</button>
+				</div>
 			</div>
-			<div class="row pb-5">
-				<div class="input-group col-md-6 offset-md-3 mb-5 mt-5">
-					<input
-						id="searchBox"
-						type="text"
-						class="form-control"
-						placeholder="Search by City"
-					/>
-					<div class="input-group-append">
-						<button class="btn btn-primary" type="button" id="searchButton">
-							Search
-						</button>
-					</div>
-				</div>
-				<div id="wait-icon">
-					<i class="fas fa-spinner fa-2x"></i>
-				</div>
+			<div id="wait-icon">
+				<i class="fas fa-spinner fa-2x"></i>
 			</div>
 		</div>
-		<!-- END Top container with search box -->
+	</div>
+	<!-- END Top container with search box -->
 
-		<!-- BEGIN Results -->
-		<div class="container">
-			<!-- BEGIN Results title -->
-			<div class="row mt-5">
-				<div class="col justify-content-center">
-					<h2 id="title">Search For Restaurants By City</h2>
-				</div>
+	<!-- BEGIN Results -->
+	<div class="container">
+		<!-- BEGIN Results title -->
+		<div class="row mt-5">
+			<div class="col justify-content-center">
+				<h2 id="title">Search for Restaurants by City</h2>
 			</div>
-			<!-- END Results ttle -->
+		</div>
+		<!-- END Results ttle -->
 
-			<div class="row mt-5">
-				<!-- BEGIN List of restaurants -->
-				<div class="col-8">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th scope="col">Restaurant Name</th>
-								<th scope="col">Address</th>
-							</tr>
-						</thead>
-						<tbody id="rest-list"></tbody>
-					</table>
-					<nav id="pagination">
-						<ul class="pagination">
-							<li class="page-item">
-								<a class="page-link" href="#">Previous</a>
-							</li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">Next</a></li>
-						</ul>
-					</nav>
-				</div>
-				<!-- END List of restaurants -->
+		<div class="row mt-5">
+			<!-- BEGIN List of restaurants -->
+			<div class="col-8">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col">Restaurant Name</th>
+							<th scope="col">Address</th>
+						</tr>
+					</thead>
+					<tbody id="rest-list"></tbody>
+				</table>
+				<nav>
+					<ul id="pagination" class="pagination">
+						
+					</ul>
+				</nav>
+			</div>
+			<!-- END List of restaurants -->
 
-				<div class="col-auto">
-					<!-- BEGIN Restaurant details -->
-					<div id="restaurantDetails" class="mb-5 justify-content-center">
-						<div class="card" style="width: 18rem;">
-							<img
-								class="card-img-top"
-								src="https://via.placeholder.com/286x143"
-								alt="Card image cap"
-							/>
-							<div class="card-body">
-								<h5 class="card-title">No restaurant selected</h5>
-								<ul class="restaurant-info">
-									<li>
-										<span class="info-label">Cuisines: </span>
-										<span class="info-text"></span>
-									</li>
-									<li>
-										<span class="info-label">Avg price for 2: </span>
-										<span class="info-text">$</span>
-									</li>
-									<div class="row rating">
-										<div class="col stars">
-											<i class="far fa-star"></i>
-											<i class="far fa-star"></i>
-											<i class="far fa-star"></i>
-											<i class="far fa-star"></i>
-											<i class="far fa-star"></i>
-										</div>
-										<div class="col votes">
-											<span class="badge badge-primary">0</span>
-										</div>
+			<div class="col-auto">
+				<!-- BEGIN Restaurant details -->
+				<div id="restaurantDetails" class="mb-5 justify-content-center">
+					<div class="card" style="width: 18rem;">
+						<img class="card-img-top" src="https://via.placeholder.com/286x143" alt="Card image cap" />
+						<div class="card-body">
+							<h5 class="card-title">No restaurant selected</h5>
+							<ul class="restaurant-info">
+								<li>
+									<span class="info-label">Cuisines: </span>
+									<span class="info-text"></span>
+								</li>
+								<li>
+									<span class="info-label">Avg price for 2: </span>
+									<span class="info-text">$</span>
+								</li>
+								<div class="row rating">
+									<div class="col stars">
+										<i class="far fa-star"></i>
+										<i class="far fa-star"></i>
+										<i class="far fa-star"></i>
+										<i class="far fa-star"></i>
+										<i class="far fa-star"></i>
 									</div>
-								</ul>
-							</div>
-							<div class="card-footer text-muted">
-								<div class="row">
-									<div class="col text-center">
-										<a href="" target="_blank" class="card-link"
-											><i class="fas fa-globe"></i
-										></a>
+									<div class="col votes">
+										<span class="badge badge-primary">0</span>
 									</div>
-									<div class="col text-center">
-										<a href="" target="_blank" class="card-link"
-											><i class="fas fa-utensils"></i
-										></a>
-									</div>
+								</div>
+							</ul>
+						</div>
+						<div class="card-footer text-muted">
+							<div class="row">
+								<div class="col text-center">
+									<a href="" target="_blank" class="card-link"><i class="fas fa-globe"></i></a>
+								</div>
+								<div class="col text-center">
+									<a href="" target="_blank" class="card-link"><i class="fas fa-utensils"></i></a>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- END Restaurant details -->
+				</div>
+				<!-- END Restaurant details -->
 
-					<!-- START MAP -->
-					<div id="map" class="mb-5">
-						<!-- MAP GOES HERE -->
+				<!-- START MAP -->
+				<div id="map" class="mb-5">
+					<!-- MAP GOES HERE -->
+				</div>
+				<!-- END MAP -->
+			</div>
+		</div>
+	</div>
+	<!-- END Results -->
+
+	<!-- BEGIN Modal -->
+	<div class="modal fade" id="selectCityModal" tabindex="-1" role="dialog" aria-labelledby="selectCityModalTitle"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="selectCityModalTitle">Select City</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<select class="form-control" id="citySelector">
+							<option value="0">No cities found</option>
+						</select>
 					</div>
-					<!-- END MAP -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+						Close
+					</button>
 				</div>
 			</div>
 		</div>
-		<!-- END Results -->
+	</div>
+	<!-- END Modal-->
 
-		<!-- BEGIN Modal -->
-		<div
-			class="modal fade"
-			id="selectCityModal"
-			tabindex="-1"
-			role="dialog"
-			aria-labelledby="selectCityModalTitle"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="selectCityModalTitle">Select City</h5>
-						<button
-							type="button"
-							class="close"
-							data-dismiss="modal"
-							aria-label="Close"
-						>
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<select class="form-control" id="citySelector">
-								<option value="0">No cities found</option>
-							</select>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button
-							type="button"
-							class="btn btn-secondary"
-							data-dismiss="modal"
-						>
-							Close
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- END Modal-->
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js"></script>
+	<script src="js/zomato.js"></script>
+	<script src="js/main.js"></script>
+</body>
 
-		<!-- Optional JavaScript -->
-		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-		<script
-			src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-			crossorigin="anonymous"
-		></script>
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-			crossorigin="anonymous"
-		></script>
-		<script
-			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-			crossorigin="anonymous"
-		></script>
-		<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js"></script>
-		<script src="js/zomato.js"></script>
-		<script src="js/main.js"></script>
-	</body>
 </html>

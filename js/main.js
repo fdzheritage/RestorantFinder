@@ -13,6 +13,7 @@ let pagination;
 let title;
 let loader;
 let map;
+let currentPage = 1;
 
 // Data
 let cityId;
@@ -62,7 +63,9 @@ function searchBoxKeyPressed(event) {
 	}
 }
 
+
 async function searchButtonPressed() {
+	// TODO SET CURRENT PAGE TO 1
 	let query = searchBox.value.trim();
 	if (query == "") {
 		alert("Please enter the name of a city on the search box");
@@ -83,7 +86,7 @@ async function searchButtonPressed() {
 			countryName = cities[0].countryName;
 			renderTitle(title, cityName, countryName);
 
-			listJSON = await fetchRestaurantsByCity(cityId);
+			listJSON = await fetchRestaurantsByCity(cityId, currentPage);
 			loadRestaurantList(restList, listJSON);
 		} else {
 			// If more than one city, ask user to select one
@@ -107,7 +110,9 @@ async function citySelected() {
 	cityId = citySelector.value;
 	cityName = cities[citySelector.selectedIndex].name;
 	countryName = cities[citySelector.selectedIndex].country_name;
-	listJSON = await fetchRestaurantsByCity(cityId);
+	showLoader();
+	listJSON = await fetchRestaurantsByCity(cityId, currentPage);
+	hideLoader();
 	renderTitle(title, cityName, countryName);
 	loadRestaurantList(restList, listJSON);
 }
@@ -159,45 +164,85 @@ function loadCitySelector(container, dataJSON) {
 		html += `<option value=${city.id}>${city.name}</option>`;
 	});
 	container.innerHTML = html;
-	// container.innerHTML = `<option value="295">Your Options Go Here</option>`;
-	//console.log(dataJSON);
 }
 
 // Populate table with a list of restaurants
 function loadRestaurantList(container, dataJSON) {
-	let list = dataJSON.restaurants;
-	let restaurantsHTML = "";
-	list.forEach((item, index) => {
-		// console.log(restaurant.restaurants);
-		restaurantsHTML += `
-                    <tr data-index="${index}">
-                        <td>${item.restaurant.name}</td>
-                        <td>${item.restaurant.location.address}</td>
-        			</tr>`;
-	});
-
-	container.innerHTML = restaurantsHTML;
-
-	// Don't remove the following lines
-	addTableEventListeners();
-	renderPagination(pagination, dataJSON);
+	if ( dataJSON.results_shown > 0 ) {
+		let list = dataJSON.restaurants;
+		let restaurantsHTML = "";
+		list.forEach((item, index) => {
+			// console.log(restaurant.restaurants);
+			restaurantsHTML += `
+						<tr data-index="${index}">
+							<td>${item.restaurant.name}</td>
+							<td>${item.restaurant.location.address}</td>
+						</tr>`;
+		});
+	
+		container.innerHTML = restaurantsHTML;
+	
+		// Don't remove the following lines
+		addTableEventListeners();
+	} else {
+		container.innerHTML = "No more results."
+	}
+	renderPagination(pagination, dataJSON);	
 }
 
 // Add information to the Restaurant Details component
-function renderRestaurantDetails(container, dataJSON) {
-	// TODO
-	// To be completed by Krasimir
-	container.innerHTML = `YOUR RESTAURANT DETAILS HERE`;
-	// console.log(dataJSON);
-}
+function renderRestaurantDetails(container, dataJSON) {}
 
 // Create pagination according to total number of results nad results shown
 function renderPagination(container, dataJSON) {
-	// TODO
-	// To be completed by Krasimir
-	container.innerHTML = `YOUR PAGINATION GOES HERE`;
 	// console.log(dataJSON);
+	let shown = dataJSON.results_shown; 
+	let count = 20;
+	let results = dataJSON.results_found;
+	let numPages = Math.ceil(results / count);
+	if ( shown <= 0 ) {
+		numPages = currentPage;
+	}
+	if ( numPages > 1 ) {
+		let startPageLink = Math.floor( (currentPage - 1) / 5) + 1;
+	
+		let paginationHTML = `<li class="page-item ${currentPage <= 1 ? "disabled" : ""}"><span class="page-link">Previous</span></li>`;
+		
+		let page;
+		for( page = startPageLink ; page < (startPageLink + Math.min(5, numPages) ) ; page++ ) {
+			paginationHTML += `<li class="page-item ${page === currentPage ? "active": ""}"><span class="page-link">${page}</span></li>`;
+		}
+	
+		paginationHTML += `<li class="page-item ${page < numPages ? "" : "disabled"}"><span class="page-link">Next</span></li>`;
+	
+		container.innerHTML = paginationHTML;
+	}
+
+	let pageLinks = document.querySelectorAll('#pagination span.page-link');
+	
+	pageLinks.forEach(link => {
+		let text = link.innerText;
+		let pageNumber = 1;
+		if ( Number.isInteger(parseInt(text)) ) {
+			pageNumber = parseInt(text);
+		} else if ( text == "Previous") {
+			pageNumber = currentPage - 1;
+		} else if ( text == "Next" ) {
+			pageNumber = currentPage + 1;
+		}
+		link.addEventListener('click', () => { loadPage(pageNumber); });
+	});
 }
+
+
+async function loadPage(pageNumber) {
+	currentPage = pageNumber;
+	showLoader();
+	listJSON = await fetchRestaurantsByCity(cityId, currentPage);
+	hideLoader();
+	loadRestaurantList(restList, listJSON);
+}
+
 
 // Table title with city and country
 function renderTitle(container, city, country) {
@@ -217,3 +262,5 @@ function renderMap(map, longitude, latitude) {
 
 	new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map);
 }
+
+
