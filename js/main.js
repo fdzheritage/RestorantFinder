@@ -44,10 +44,7 @@ window.onload = async function() {
 	searchButton.addEventListener("click", searchButtonPressed);
 	searchBox.addEventListener("keyup", searchBoxKeyPressed);
 	$("#selectCityModal").on("hide.bs.modal", citySelectionCanceled);
-	// citySelector.addEventListener("click", citySelectorClicked);
-
-	// Testing, remove following line from production
-	addTableEventListeners();
+	citySelector.addEventListener("change", citySelectorClicked);
 };
 
 // Functions that handle events from event listeners
