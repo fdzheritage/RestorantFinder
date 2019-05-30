@@ -206,7 +206,7 @@ function renderMap(map, longitude, latitude) {
 		zoom: 16
 	});
 
-	map.easeTo({ center: [longitude, latitude] });
+	map.jumpTo({ center: [longitude, latitude] });
 
 	new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map);
 }
