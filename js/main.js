@@ -23,7 +23,8 @@ let cities;
 
 // Tokens and API Keys
 mapboxgl.accessToken =
-	"pk.eyJ1IjoiZmR6aGVyaXRhZ2UiLCJhIjoiY2p2eHphNDMzMGFncTRhbXFjMng2Z3phNyJ9.1dI5Wg2gw_JHsA85nzldUA";
+	"pk.eyJ1IjoiYW5ua2FsaXphIiwiYSI6ImNqdnh6YXJnZDBhaTQzeWxzeTJuamEzdW0ifQ.bJwGt5e7mf5ntMZHzwkAjQ";
+const mapboxStyle = "mapbox://styles/annkaliza/cjvxzfghg38wm1cmuz3q2l2u7";
 
 // Setup elements and event listeners
 window.onload = async function() {
@@ -205,9 +206,20 @@ function renderTitle(container, city, country) {
 }
 
 // Show map using mapbox api
-function renderMap(container, longitud, latitud) {
-	// TODO
-	// To be completed by Anna
-	// Use code from mabbox
-	// console.log(longitud, latitud);
+function renderMap(map, longitude, latitude) {
+	map = new mapboxgl.Map({
+		container: "map",
+		style: "mapbox://styles/annkaliza/cjvxzfghg38wm1cmuz3q2l2u7",
+		center: [-75.765, 45.4553],
+		zoom: 16
+	});
+
+	map.jumpTo({ center: [longitude, latitude] });
+
+	new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map);
 }
+
+// TODO
+// To be completed by Anna
+// Use code from mabbox
+// console.log(longitud, latitud);
