@@ -154,11 +154,8 @@ function hideLoader() {
 
 // Populate dropdown with sugested cities
 function loadCitySelector(container, dataJSON) {
-	// console.log(dataJSON);
-	// TODO
-	// To be completed by Krasimir
 	let listCities = dataJSON.location_suggestions;
-	// console.log(listCities);
+
 	let html = "";
 	listCities.forEach(city => {
 		html += `<option value=${city.id}>${city.name}</option>`;
@@ -170,10 +167,18 @@ function loadCitySelector(container, dataJSON) {
 
 // Populate table with a list of restaurants
 function loadRestaurantList(container, dataJSON) {
-	// TODO
-	// To be completed by Krasimir
-	//container.innerHTML = `<tr><td>Your table body goes here</td><td>and here</td></tr>`;
-	// console.log(dataJSON);
+	let list = dataJSON.restaurants;
+	let restaurantsHTML = "";
+	list.forEach((item, index) => {
+		// console.log(restaurant.restaurants);
+		restaurantsHTML += `
+                    <tr data-index="${index}">
+                        <td>${item.restaurant.name}</td>
+                        <td>${item.restaurant.location.address}</td>
+        			</tr>`;
+	});
+
+	container.innerHTML = restaurantsHTML;
 
 	// Don't remove the following lines
 	addTableEventListeners();
