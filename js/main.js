@@ -188,9 +188,42 @@ function loadRestaurantList(container, dataJSON) {
 
 // Add information to the Restaurant Details component
 function renderRestaurantDetails(container, dataJSON) {
-	// TODO
-	// To be completed by Krasimir
-	container.innerHTML = `YOUR RESTAURANT DETAILS HERE`;
+	// console.log(dataJSON);
+	// console.log(list);
+	let restaurantDetailsHTML = `
+    <div class="card" style="width: 18rem;">
+    <img
+            class="card-img-top"
+            src="${dataJSON.featured_image}"
+            alt="Card image cap"
+        />
+        <div class="card-body">
+            <h5 class="card-title">${dataJSON.name}</h5>
+            <ul class="restaurant-info">
+                <li>
+                    <span class="info-label">Cuisines: </span>
+                    <span class="info-text">${dataJSON.cuisines}</span>
+                </li>
+                <li>
+                    <span class="info-label">Avg price for 2: </span>
+                    <span class="info-text">${
+											dataJSON.average_cost_for_two
+										}</span>
+                </li>
+                <div class="row rating">
+                    <div class="col stars">
+                    ${createStar(dataJSON.user_rating.aggregate_rating)}
+                    </div>
+                    <div class="col votes">
+                        <span class="badge badge-primary">${
+													dataJSON.user_rating.votes
+												}</span>
+                    </div>
+                </div>
+            </ul>
+        </div>
+        </div>`;
+	container.innerHTML = restaurantDetailsHTML;
 	// console.log(dataJSON);
 }
 
@@ -228,3 +261,30 @@ function renderMap(map, longitude, latitude) {
 // To be completed by Anna
 // Use code from mabbox
 // console.log(longitud, latitud);
+
+function createStar(rating) {
+	console.log(rating);
+	let starHtml = "";
+	let fullStar = `<i class="fas fa-star"></i>`;
+	let halfStar = `<i class="fas fa-star-half-alt"></i>`;
+	let emptyStar = `<i class="far fa-star"></i>`;
+
+	for (i = 1; i <= 5; i++) {
+		if (i <= rating) {
+			starHtml += fullStar;
+		} else if (i > rating && rating < i + 1) {
+			starHtml += halfStar;
+		} else {
+			starHtml += emptyStar;
+		}
+	}
+	return starHtml;
+}
+
+// if (i < rating) {
+// 	starHtml += fullStar;
+// } else if (rating % i != 0) {
+// 	starHtml += halfStar;
+// } else {
+// 	starHtml += emptyStar;
+// }
