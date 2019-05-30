@@ -176,10 +176,10 @@ function loadRestaurantList(container, dataJSON) {
 	// console.log(dataJSON);
 	let list = dataJSON.restaurants;
 	let restaurantsHTML = "";
-	list.forEach(item => {
+	list.forEach((item, index) => {
 		// console.log(restaurant.restaurants);
 		restaurantsHTML += `
-                    <tr>
+                    <tr data-index="${index}">
                         <td>${item.restaurant.name}</td>
                         <td>${item.restaurant.location.address}</td>
         			</tr>`;
