@@ -201,10 +201,7 @@ function renderPagination(container, dataJSON) {
 
 // Table title with city and country
 function renderTitle(container, city, country) {
-	// TODO
-	// To be completed by Anna
-	container.innerHTML = `YOUR TITLE HERE`;
-	// console.log(city, country);
+	container.innerHTML = `<h2>Restaurants in <span id="rest-city">${city}</span>, <span id="rest-country">${country}</span></h2>`;
 }
 
 // Show map using mapbox api
@@ -220,8 +217,3 @@ function renderMap(map, longitude, latitude) {
 
 	new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map);
 }
-
-// TODO
-// To be completed by Anna
-// Use code from mabbox
-// console.log(longitud, latitud);
