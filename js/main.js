@@ -31,6 +31,7 @@ const mapboxStyle = "mapbox://styles/annkaliza/cjvxzfghg38wm1cmuz3q2l2u7";
 window.onload = async function() {
 	// Get components
 	searchBox = document.getElementById("searchBox");
+	searchBox.value = await getUserLocation();
 	searchButton = document.getElementById("searchButton");
 	detailsButton = document.getElementById("detailsButton");
 	citySelector = document.getElementById("citySelector");
