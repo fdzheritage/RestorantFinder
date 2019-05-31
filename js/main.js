@@ -228,7 +228,6 @@ function renderRestaurantDetails(container, dataJSON) {
                     </div>
                 </div>
             </ul>
-        </div>
 		</div>
 		<div class="card-footer text-muted">
 			<div class="row">
