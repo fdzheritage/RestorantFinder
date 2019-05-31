@@ -190,9 +190,11 @@ function loadRestaurantList(container, dataJSON) {
 function renderRestaurantDetails(container, dataJSON) {
 	// console.log(dataJSON);
 	// console.log(list);
+	// console.log(list.restaurants.url);
+
 	let restaurantDetailsHTML = `
     <div class="card" style="width: 18rem;">
-    <img
+    	<img
             class="card-img-top"
             src="${dataJSON.featured_image}"
             alt="Card image cap"
@@ -222,7 +224,28 @@ function renderRestaurantDetails(container, dataJSON) {
                 </div>
             </ul>
         </div>
-        </div>`;
+		</div>
+		<div class="card-footer text-muted">
+			<div class="row">
+				<div class="col text-center">
+					<a
+						href="${dataJSON.url}"
+						target="_blank"
+						class="card-link"
+						><i class="fas fa-globe"></i
+					></a>
+				</div>
+				<div class="col text-center">
+					<a
+						href="${dataJSON.menu_url}"
+						target="_blank"
+						class="card-link"
+						><i class="fas fa-utensils"></i
+					></a>
+				</div>
+			</div>
+		</div>
+	</div>`;
 	container.innerHTML = restaurantDetailsHTML;
 	// console.log(dataJSON);
 }
@@ -280,11 +303,3 @@ function createStar(rating) {
 	}
 	return starHtml;
 }
-
-// if (i < rating) {
-// 	starHtml += fullStar;
-// } else if (rating % i != 0) {
-// 	starHtml += halfStar;
-// } else {
-// 	starHtml += emptyStar;
-// }
