@@ -63,9 +63,7 @@ function searchBoxKeyPressed(event) {
 	}
 }
 
-
 async function searchButtonPressed() {
-	// TODO SET CURRENT PAGE TO 1
 	let query = searchBox.value.trim();
 	if (query == "") {
 		alert("Please enter the name of a city on the search box");
@@ -168,7 +166,7 @@ function loadCitySelector(container, dataJSON) {
 
 // Populate table with a list of restaurants
 function loadRestaurantList(container, dataJSON) {
-	if ( dataJSON.results_shown > 0 ) {
+	if (dataJSON.results_shown > 0) {
 		let list = dataJSON.restaurants;
 		let restaurantsHTML = "";
 		list.forEach((item, index) => {
@@ -179,61 +177,129 @@ function loadRestaurantList(container, dataJSON) {
 							<td>${item.restaurant.location.address}</td>
 						</tr>`;
 		});
-	
+
 		container.innerHTML = restaurantsHTML;
-	
+
 		// Don't remove the following lines
 		addTableEventListeners();
 	} else {
-		container.innerHTML = "No more results."
+		container.innerHTML = "No more results.";
 	}
-	renderPagination(pagination, dataJSON);	
+	renderPagination(pagination, dataJSON);
 }
 
 // Add information to the Restaurant Details component
-function renderRestaurantDetails(container, dataJSON) {}
+function renderRestaurantDetails(container, dataJSON) {
+	let restaurantDetailsHTML = `
+    <div class="card" style="width: 18rem;">
+    	<img
+            class="card-img-top"
+            src="${dataJSON.featured_image}"
+            alt="Card image cap"
+        />
+        <div class="card-body">
+            <h5 class="card-title">${dataJSON.name}</h5>
+            <ul class="restaurant-info">
+                <li>
+                    <span class="info-label">Cuisines: </span>
+                    <span class="info-text">${dataJSON.cuisines}</span>
+                </li>
+                <li>
+                    <span class="info-label">Avg price for 2: </span>
+                    <span class="info-text">${
+											dataJSON.average_cost_for_two
+										}</span>
+                </li>
+                <div class="row rating">
+                    <div class="col stars">
+                    ${createStar(dataJSON.user_rating.aggregate_rating)}
+                    </div>
+                    <div class="col votes">
+                        <span class="badge badge-primary">${
+													dataJSON.user_rating.votes
+												}</span>
+                    </div>
+                </div>
+            </ul>
+        </div>
+		</div>
+		<div class="card-footer text-muted">
+			<div class="row">
+				<div class="col text-center">
+					<a
+						href="${dataJSON.url}"
+						target="_blank"
+						class="card-link"
+						><i class="fas fa-globe"></i
+					></a>
+				</div>
+				<div class="col text-center">
+					<a
+						href="${dataJSON.menu_url}"
+						target="_blank"
+						class="card-link"
+						><i class="fas fa-utensils"></i
+					></a>
+				</div>
+			</div>
+		</div>
+	</div>`;
+	container.innerHTML = restaurantDetailsHTML;
+	// console.log(dataJSON);
+}
 
 // Create pagination according to total number of results nad results shown
 function renderPagination(container, dataJSON) {
 	// console.log(dataJSON);
-	let shown = dataJSON.results_shown; 
+	let shown = dataJSON.results_shown;
 	let count = 20;
 	let results = dataJSON.results_found;
 	let numPages = Math.ceil(results / count);
-	if ( shown <= 0 ) {
+	if (shown <= 0) {
 		numPages = currentPage;
 	}
-	if ( numPages > 1 ) {
-		let startPageLink = Math.floor( (currentPage - 1) / 5) + 1;
-	
-		let paginationHTML = `<li class="page-item ${currentPage <= 1 ? "disabled" : ""}"><span class="page-link">Previous</span></li>`;
-		
+	if (numPages > 1) {
+		let startPageLink = Math.floor((currentPage - 1) / 5) + 1;
+
+		let paginationHTML = `<li class="page-item ${
+			currentPage <= 1 ? "disabled" : ""
+		}"><span class="page-link">Previous</span></li>`;
+
 		let page;
-		for( page = startPageLink ; page < (startPageLink + Math.min(5, numPages) ) ; page++ ) {
-			paginationHTML += `<li class="page-item ${page === currentPage ? "active": ""}"><span class="page-link">${page}</span></li>`;
+		for (
+			page = startPageLink;
+			page < startPageLink + Math.min(5, numPages);
+			page++
+		) {
+			paginationHTML += `<li class="page-item ${
+				page === currentPage ? "active" : ""
+			}"><span class="page-link">${page}</span></li>`;
 		}
-	
-		paginationHTML += `<li class="page-item ${page < numPages ? "" : "disabled"}"><span class="page-link">Next</span></li>`;
-	
+
+		paginationHTML += `<li class="page-item ${
+			page < numPages ? "" : "disabled"
+		}"><span class="page-link">Next</span></li>`;
+
 		container.innerHTML = paginationHTML;
 	}
 
-	let pageLinks = document.querySelectorAll('#pagination span.page-link');
-	
+	let pageLinks = document.querySelectorAll("#pagination span.page-link");
+
 	pageLinks.forEach(link => {
 		let text = link.innerText;
 		let pageNumber = 1;
-		if ( Number.isInteger(parseInt(text)) ) {
+		if (Number.isInteger(parseInt(text))) {
 			pageNumber = parseInt(text);
-		} else if ( text == "Previous") {
+		} else if (text == "Previous") {
 			pageNumber = currentPage - 1;
-		} else if ( text == "Next" ) {
+		} else if (text == "Next") {
 			pageNumber = currentPage + 1;
 		}
-		link.addEventListener('click', () => { loadPage(pageNumber); });
+		link.addEventListener("click", () => {
+			loadPage(pageNumber);
+		});
 	});
 }
-
 
 async function loadPage(pageNumber) {
 	currentPage = pageNumber;
@@ -242,7 +308,6 @@ async function loadPage(pageNumber) {
 	hideLoader();
 	loadRestaurantList(restList, listJSON);
 }
-
 
 // Table title with city and country
 function renderTitle(container, city, country) {
@@ -263,4 +328,21 @@ function renderMap(map, longitude, latitude) {
 	new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map);
 }
 
+function createStar(rating) {
+	console.log(rating);
+	let starHtml = "";
+	let fullStar = `<i class="fas fa-star"></i>`;
+	let halfStar = `<i class="fas fa-star-half-alt"></i>`;
+	let emptyStar = `<i class="far fa-star"></i>`;
 
+	for (i = 1; i <= 5; i++) {
+		if (i <= rating) {
+			starHtml += fullStar;
+		} else if (i > rating && rating < i + 1) {
+			starHtml += halfStar;
+		} else {
+			starHtml += emptyStar;
+		}
+	}
+	return starHtml;
+}
