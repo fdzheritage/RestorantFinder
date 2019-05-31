@@ -190,11 +190,17 @@ function loadRestaurantList(container, dataJSON) {
 
 // Add information to the Restaurant Details component
 function renderRestaurantDetails(container, dataJSON) {
+	let imageUrl = dataJSON.featured_image;
+
+	if (imageUrl == "unknown" || imageUrl == "") {
+		imageUrl = "./img/noimage.png";
+	}
+
 	let restaurantDetailsHTML = `
     <div class="card" style="width: 18rem;">
     	<img
             class="card-img-top"
-            src="${dataJSON.featured_image}"
+            src="${imageUrl}"
             alt="Card image cap"
         />
         <div class="card-body">
